@@ -4,8 +4,8 @@
 	"description": "portfolio site",
 	"main": "index.js",
 	"scripts": {
-		"start": "parcel xaaane.html",
-		"build": "parcel build xaaane.html",
+		"start": "parcel index.html",
+		"build": "parcel build index.html",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
