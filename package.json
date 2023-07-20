@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "parcel xaaane.html",
-		"build": "parcel build xaaane.html",
+		"build": "parcel build xaaane.html --public-url",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
