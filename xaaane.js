@@ -26,7 +26,7 @@ var camera = new THREE.PerspectiveCamera(75, 160 / 160, 0.1, 1000);
 camera.position.z = 1.7;
 
 var renderer = new THREE.WebGLRenderer({ alpha: true });
-var container = document.getElementById("dodo");
+var container = document.getElementById("ico");
 renderer.setSize(160, 160);
 renderer.domElement.style.position = "absolute";
 renderer.domElement.style.top = "0";
@@ -78,28 +78,61 @@ animate();
 const myCircle = document.getElementById("circle");
 const cursorSize = myCircle.offsetWidth;
 
+let mousePos = { x: 0, y: 0 };
+
 const myMouse = {
 	follow: function (event) {
 		const width = document.documentElement.clientWidth - cursorSize;
-		const height = document.documentElement.clientHeight - cursorSize;
+		const height = document.documentElement.scrollHeight - cursorSize;
 
-		let x =
-			(event.type == "touchmove" ? event.touches[0].pageX : event.pageX) -
-			cursorSize / 2;
-		let y =
-			(event.type == "touchmove" ? event.touches[0].pageY : event.pageY) -
-			cursorSize / 2;
+		let x = event.pageX - cursorSize / 2;
+		let y = event.pageY - cursorSize / 2;
 
 		x = x < 0 ? 0 : x > width ? width : x;
 		y = y < 0 ? 0 : y > height ? height : y;
 
-		myCircle.style.left = x + "px";
-		myCircle.style.top = y + "px";
+		mousePos.x = x;
+		mousePos.y = y;
 	},
 };
 
+function updateCirclePosition() {
+	myCircle.style.left = mousePos.x + "px";
+	myCircle.style.top = mousePos.y + "px";
+
+	requestAnimationFrame(updateCirclePosition);
+}
+
 document.onmousemove = myMouse.follow;
-document.ontouchmove = myMouse.follow;
+updateCirclePosition();
+
+// Get all <div> elements with the class "scaled"
+const scaledDivs = document.getElementsByClassName("scaled");
+for (let div of scaledDivs) {
+	// Scale myCircle to 200% when mouse is over <div> tag with the class "scaled"
+	div.addEventListener("mouseover", function () {
+		myCircle.style.transform = "scale(2)";
+	});
+
+	// Remove transform when mouse leaves the <div> tag
+	div.addEventListener("mouseout", function () {
+		myCircle.style.transform = "scale(1)";
+	});
+}
+
+// Get all <a> elements within the parent class of 'work'
+const workLinks = document.querySelectorAll(".work a");
+for (let link of workLinks) {
+	// Scale myCircle to 200% when mouse is over <a> tag within the parent class of 'work'
+	link.addEventListener("mouseover", function () {
+		myCircle.style.transform = "scale(2)";
+	});
+
+	// Remove transform when mouse leaves the <a> tag
+	link.addEventListener("mouseout", function () {
+		myCircle.style.transform = "scale(1)";
+	});
+}
 
 // CSS Styles for mobile
 function isElementCentered(el) {
